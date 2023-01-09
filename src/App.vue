@@ -48,12 +48,13 @@ body {
 }
 
 .load-more button {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
   border-radius: 20px;
   margin: 0 0 2rem 0;
   font-size: 1.2rem;
   color: white;
   font-family: 'Poller One';
+  border: transparent;
 }
 
 .load-more button:hover {

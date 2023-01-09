@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import store from "@/store"
 
 const routes = [
   {
@@ -10,24 +11,46 @@ const routes = [
   {
     path: '/starships',
     name: 'starships',
-    component: () => import('../views/StarshipsView.vue')
+    component: () => import('../views/StarshipsView.vue'),
+    //
+    beforeEnter: (to, from, next) => {
+      if (store.state.loggedIn === false) {
+        next(false);
+        store.commit("swapLoginModal");
+      } else {
+        next();
+      }
+    },
   },
   {
     path: '/starships/:id',
     name: 'details',
     component: () => import('../views/StarshipsDetailsView.vue'),
-    props: true
+    props: true,
+    //
+    beforeEnter: (to, from, next) => {
+      if (store.state.loggedIn === false) {
+        next(false);
+        store.commit("swapLoginModal");
+      } else {
+        next();
+      }
+    },
   },
   {
     path: '/characters',
     name: 'characters',
-    component: () => import('../views/CharactersView.vue')
-  },
-  /*{
-    path: '/starships/detailsActors',
-    name: 'detailsActors',
-    component: () => import('../views/DetailsActorsView.vue')
-  }*/
+    component: () => import('../views/CharactersView.vue'),
+    //
+    beforeEnter: (to, from, next) => {
+      if (store.state.loggedIn === false) {
+        next(false);
+        store.commit("swapLoginModal");
+      } else {
+        next();
+      }
+    },
+  }
 ]
 
 const router = createRouter({

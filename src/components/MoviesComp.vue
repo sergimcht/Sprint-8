@@ -32,4 +32,8 @@ export default {
   color: var(--red);
   font-size: 120%;
 }
+
+.pilots-card p {
+  margin: .4rem 0;
+}
 </style>

@@ -14,21 +14,23 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     props: [ 'pilotsArray' ],
-    data() {
-        return {
-            starshipPilotsArray: [],
-        }
+    computed: {
+        ...mapState(["starshipPilotsArray"])
     },
     mounted() {
     this.pilotsArray.forEach((pilotID) => {
       fetch(pilotID)
         .then((res) => res.json())
         .then((data) => {
-          this.starshipPilotsArray.push(data);
+          this.$store.state.starshipPilotsArray.push(data);
         });
     });
+  },
+  unmounted() {
+    this.$store.state.starshipPilotsArray=[];
   },
 }
 </script>

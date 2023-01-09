@@ -1,15 +1,17 @@
 <template>
     <div class="characters" v-if="charactersList.length">
     <div class="characters-card" v-for="character in charactersList" :key="character">
-        <h3>{{ character.name.toUpperCase() }}</h3>
-        <div>Gender: {{ character.gender }}</div>
-        <div>Height: {{ character.height }}</div>
-        <div>Mass: {{ character.mass }}</div>
-        <div>Skin Color: {{ character.skin_color }}</div>
-        <div>Birth Year: {{ character.birth_year }}</div>
-        <div>Eye Color: {{ character.eye_color }}</div>
-        <MoviesComp :moviesArray="character.films" />
-        <StarshipsComp :starshipsArray="character.starships" />
+        <div class="characters-elements">
+          <h3>{{ character.name.toUpperCase() }}</h3>
+          <p>Gender: {{ character.gender }}</p>
+          <p>Height: {{ character.height }}</p>
+          <p>Mass: {{ character.mass }}</p>
+          <p>Skin Color: {{ character.skin_color }}</p>
+          <p>Birth Year: {{ character.birth_year }}</p>
+          <p>Eye Color: {{ character.eye_color }}</p>
+          <MoviesComp :moviesArray="character.films" />
+          <StarshipsComp :starshipsArray="character.starships" />
+        </div>
     </div>
     <div class="load-more" v-if="(charactersList.length < 87)">
       <button @click="moreCharacters">Load More</button>
@@ -52,10 +54,15 @@ export default {
 .characters {
   margin: 0 auto;
   max-width: 1000px;
+  font-size: 130%;
 }
 
 .characters h2 {
   color: white;
+}
+
+.characters-elements {
+  margin: 0 1rem;
 }
 .characters-card {
   text-align: left;
@@ -70,5 +77,9 @@ export default {
 .characters-card h3 {
   color: var(--red);
   font-size: 140%;
+}
+
+.characters-card p {
+  margin: .4rem 0;
 }
 </style>

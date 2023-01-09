@@ -27,28 +27,27 @@
 
 <script>
 import { mapMutations } from "vuex";
-
 export default {
   data() {
     return {
-      name: "",
-      nameError: "",
-      username: "",
-      usernameError: "",
-      email: "",
-      emailError: "",
-      password: "",
-      passwordError: ""
+        name: "",
+        nameError: "",
+        username: "",
+        usernameError: "",
+        email: "",
+        emailError: "",
+        password: "",
+        passwordError: ""
     };
   },
 
   methods: {
-    ...mapMutations(["swapSignupModal", "addUser", "swapLoginModal"]),
-
+    ...mapMutations(["swapSignupModal"]),
     swapModals() {
-      this.swapSignupModal();
-      this.swapLoginModal();
+        this.$store.commit('swapSignupModal');
+        this.$store.commit('swapLoginModal');
     },
+
 
     validateAndAdd() {
         let namePattern = /^[A-Za-z]+$/;
@@ -84,7 +83,7 @@ export default {
         }
 
         if (nameValidation && usernameValidation && emailValidation && passwordValidation) {
-            this.addUser({ name: this.name, username: this.username.toLowerCase(), email: this.email.toLowerCase(), password: this.password });
+            this.$store.commit("addUser", { name: this.name, username: this.username.toLowerCase(), email: this.email.toLowerCase(), password: this.password });
             this.name = "";
             this.username = "";
             this.email = "";

@@ -10,7 +10,6 @@
         <fa class="fa-icon fb" :icon="['fab', 'facebook']" />
       </div>
       <div class="logo">
-        
         <p><router-link :to="{ name: 'home' }"><img alt="Star Wars logo" src="../assets/StarWarsLogo.png"/></router-link></p>
       </div>
   
@@ -137,15 +136,28 @@
 
   nav a.router-link-exact-active {
   color: var(--red);
-}
+  }
+
+  @media only screen and (max-width: 600px) {
+      .navigation-links {
+          flex-direction: column;
+      }
+
+      .logo img {
+          width: 150px;
+          margin: 2rem 1rem;
+          color: white;
+      
+      }
+  }
 
   </style>
 
 <style>
 .modal-wrapper {
+    background: rgba(0, 0, 0, 0.75);
     position: fixed;
     top: 0;
-    background: rgba(0, 0, 0, 0.75);
     width: 100%;
     height: 100%;
     display: flex;

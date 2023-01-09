@@ -23,7 +23,6 @@
     
 <script>
 import { mapMutations } from "vuex";
-
 export default {
   data() {
     return {
@@ -35,14 +34,13 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["swapLoginModal", "logIn", "swapSignupModal"]),
+    ...mapMutations(["swapLoginModal"]),
     swapModals() {
-      this.swapSignupModal();
-      this.swapLoginModal();
+      this.$store.commit('swapSignupModal');
+      this.$store.commit('swapLoginModal');
     },
 
     validateAndLogin() {
-    // username Validation
     let usernamePattern = /^[A-Za-z0-9._%+-]+$/;
     let usernameValidation = usernamePattern.test(this.username);
     if (!usernameValidation) {
@@ -51,7 +49,6 @@ export default {
         this.usernameError = "";
     }
 
-    // Password Validation
     let passwordPattern = /^.{5,}$/;
     let passwordValidation = passwordPattern.test(this.password);
     if (!passwordValidation) {
@@ -61,7 +58,7 @@ export default {
     }
 
     if (usernameValidation && passwordValidation) {
-        this.logIn({ username: this.username.toLowerCase(), password: this.password });
+        this.$store.commit("logIn", { username: this.username.toLowerCase(), password: this.password })
     }
     },
 }}

@@ -7,7 +7,7 @@ export default createStore({
     starshipsList: [],
     oneStarship: {},
     starshipsPage: 1,
-    pilotsStarship: [],
+    starshipPilotsArray: [],
 
     charactersList: [],
     charactersPage: 1,
@@ -59,9 +59,6 @@ export default createStore({
     viewMoreCharacters(state) {
       state.charactersPage++
     },
-    fetchPilotsMut(state, pilotsArray) {
-      state.pilotsStarship = pilotsArray
-    },
     swapSignupModal(state) {
       state.showSignupModal = !state.showSignupModal;
     },
@@ -84,46 +81,40 @@ export default createStore({
         state.showSignupModal = false;
         alert("User Registered succesfully");
       }
-
-      console.log(state.registeredUsers);
       console.table(state.registeredUsers);
     },
     logIn(state, userDataObject) {
-      let isLoggedIn = false;
+      let isSignedUp = false;
 
-      // We only do this check if there are already registered users.
       if (state.registeredUsers.length) {
         state.registeredUsers.some((user) => {
           if (user.username === userDataObject.username && user.password === userDataObject.password) {
-            return (isLoggedIn = true);
+            return (isSignedUp = true);
           } else {
-            isLoggedIn = false;
+            isSignedUp = false;
           }
         });
 
-        if (isLoggedIn) {
-          console.log(userDataObject.username);
+        if (isSignedUp) {
           state.currentUser = userDataObject.username;
           state.loggedIn = true;
           state.showLoginModal = false;
-          alert("Succesfully logged in!");
+          alert("User logged in");
         } else {
           state.loggedIn = false;
-          alert("Invalid username or password!");
+          alert("Invalid username or password");
         }
       } else {
         state.loggedIn = false;
-        alert("No user registered yet!");
+        alert("No user with this username registered yet");
       }
     },
     logOut(state) {
       state.loggedIn = false;
       state.currentUser = "";
 
-      // Redirects to the Home page when we log out
       router.push({ name: "home" });
-
-      alert("Logged out!");
+      alert("User logged out");
     },
   },
   actions: {
@@ -131,10 +122,9 @@ export default createStore({
       const starshipsData = await axios.get(`https://swapi.py4e.com/api/starships/?page=${starshipsPage}`).then(response => response.data.results)
       commit('fetchStarshipsMut', starshipsData)
     },
-    async fetchOneStarshipAct({ commit }, url) {//doblamos
+    async fetchOneStarshipAct({ commit }, url) {
       const oneStarshipData = await axios.get(`${url}`).then(response => response.data)
       commit('fetchOneStarshipMut', oneStarshipData)
-      commit("fetchPilotsMut", oneStarshipData.pilots);
     },
     async fetchCharactersAct({ commit }, charactersPage) {
       const charactersData = await axios.get(`https://swapi.py4e.com/api/people/?page=${charactersPage}`).then(response => response.data.results)
